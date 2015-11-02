@@ -5,58 +5,89 @@ public class StairController : MonoBehaviour {
 
     private Vector3 view;
 
-    public Camera cam;
+
+    [Header("RotationsAttribute")]
+    public float rotationspeed = 1; //Rotationsgeschwindigkeit
+    public float maxAngle = 180; //noch nicht im einsatz
+    public float minAngle = -180; // noch nicht im einsatz
+    public float rotatelimit = 180; // rotiert hier 180Grad.
+
+    [Header("RotationAchsen")] // um welche achse soll rotiert werden
+    public bool x_rotation = false;
+    public bool y_rotation = false;
+    public bool z_rotation = false;
+
+    [Header("GameObjects")]
+    
+    public GameObject stair;
     private GameObject player;
-    public GameObject stair, trigger_go;
-    private bool triggert = false, isdrin = false;
-    private Animator anima;
+    public Camera camer; //Camera des Players für RayCast
+
+    private bool isswitch = false; // überprüfe switches oder trittfalle bzw momentan leeres GameObject
+    private bool triggert = false, isdrin = false; // triggert= switch oder button ; is drin reingelaufen;
+    private Animator anima; //Animator benötigen der Switch und Button bzw noch andere
 
     private const string statename = "speed";
-    public float rotationspeed = 1, maxAngle = 180, minAngle = -180, rotatelimit = 180;
-    private float counter, i, switch_v = 1;
+    private float counter, i, switch_v = -1;
 
     
 	// Use this for initialization
 	void Start () {
+
+      if (this.gameObject.tag == "Button" || this.gameObject.tag == "Switch")  //überprüffe ob triggerbar //// ambesten noch ändern in tag == triggerbar
+        {
+            isswitch = true;
+        }
+      
         player = GameObject.FindGameObjectWithTag("Player");
-        i = rotatelimit / rotationspeed;
-        anima = trigger_go.GetComponent<Animator>();
+        i = rotatelimit / rotationspeed;  //berechnet die schrittgeschwindigkeit der rotation
+        if (isswitch)
+            anima = this.gameObject.GetComponent<Animator>();  //Animator wird nur zugewiesen falls auch etwas is mit Animator also switch oder button oder usw
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray,out hit,20) && Input.GetKeyDown(KeyCode.E))
+       
+            Ray ray = camer.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+                
+        if (Physics.Raycast(ray, out hit, 20) && Input.GetKeyDown(KeyCode.E) ) //Raycast wird überprüfft ob es in der distance von 20 und dem drück von E unten einen collider erwischt
         {
-            
-            if (hit.collider.gameObject == trigger_go)
+            Debug.Log("E wurde gedrückt!!!");
+            if (hit.collider.gameObject == this.gameObject && isswitch)
             {
                 Debug.Log("triggert");
                 triggert = true;
                 anima.SetFloat(statename, switch_v);
             }
+
         }
         Debug.Log(switch_v);
 
         if (triggert || isdrin)
         {
             counter += rotationspeed;
-            stair.transform.Rotate(0, 0, rotationspeed, Space.Self);
+            
+            if (z_rotation)
+                stair.transform.Rotate(0, 0, rotationspeed, Space.Self);
+            if (y_rotation)
+                stair.transform.Rotate(0, rotationspeed, 0, Space.Self);
+            if (x_rotation)
+                stair.transform.Rotate(rotationspeed, 0, 0, Space.Self);
+        
             if (counter == rotatelimit)
             {               
                 triggert = false;
                 isdrin = false;                
                 counter = 0;
-                switch_v = -switch_v;
+                switch_v *= -1;
             }
         }	
 	}
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject==player)
+        if (other.gameObject==player&&!isswitch)
         {
             isdrin = true;
         }
