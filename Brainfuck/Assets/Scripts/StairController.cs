@@ -23,8 +23,13 @@ public class StairController : MonoBehaviour {
     private GameObject player;
     public Camera camer; //Camera des Players für RayCast
 
-    private bool isswitch = false; // überprüfe switches oder trittfalle bzw momentan leeres GameObject
-    private bool triggert = false, isdrin = false; // triggert= switch oder button ; is drin reingelaufen;
+    [Header("SchalterArt")]
+
+    public bool isswitch = false; // überprüfe switches oder trittfalle bzw momentan leeres GameObject
+    public bool walkin = false;
+    public bool getanima = false;
+    private bool triggert = false;
+    private bool isdrin = false; // triggert= switch oder button ; is drin reingelaufen;
     private Animator anima; //Animator benötigen der Switch und Button bzw noch andere
 
     private const string statename = "speed";
@@ -41,7 +46,7 @@ public class StairController : MonoBehaviour {
       
         player = GameObject.FindGameObjectWithTag("Player");
         i = rotatelimit / rotationspeed;  //berechnet die schrittgeschwindigkeit der rotation
-        if (isswitch)
+        if (getanima)
             anima = this.gameObject.GetComponent<Animator>();  //Animator wird nur zugewiesen falls auch etwas is mit Animator also switch oder button oder usw
     }
 	
