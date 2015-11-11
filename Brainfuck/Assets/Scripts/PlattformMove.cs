@@ -3,7 +3,8 @@ using System.Collections;
 
 //fkt vorerst nur mit einer richtung 3 
 
-public class PlattformMove : MonoBehaviour {
+public class PlattformMove : MonoBehaviour
+{
 
     public Vector3 maximum = new Vector3(0, 0, 0);
     public Vector3 velocity = new Vector3(0, 0, 0);
@@ -11,46 +12,73 @@ public class PlattformMove : MonoBehaviour {
     private Vector3 tmpvec = new Vector3(0, 0, 0);
 
     public bool droppin = false, breakable = false, movable = false;
-    private bool onPlat = false;
-    
+    private bool onPlat = false, falling = false, breaked = false;
+    private int breakcounter = 0;
+
     private GameObject Player;
 
+    IEnumerator wair_fall()
+    {
+        droppin = false;
+        yield return new WaitForSeconds(3.0f);
+        falling = true;
+    }
+    IEnumerator wair_break()
+    {
+        yield return new WaitForSeconds(2.0f);
+        breakcounter++;
+        if (breakcounter == 5)
+        {
+            breaked = true;
+        }
+    }
 
-    // Use this for initialization
-    void Start ()
+   
+    void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         beginning = this.gameObject.transform.position;
         tmpvec.x = Mathf.Abs(beginning.x);
+    }
 
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update()
     {
-        Debug.Log("Tomporary"+tmpvec);
-        Debug.Log("Beginning:"+beginning);
+        Debug.Log("Tomporary" + tmpvec);
+        Debug.Log("Beginning:" + beginning);
 
-        tmpvec.x += Mathf.Abs(velocity.x);
-        tmpvec.y += Mathf.Abs(velocity.y);
-        tmpvec.z += Mathf.Abs(velocity.z);
+        // tmpvec.x += Mathf.Abs(velocity.x);
+        // tmpvec.y += Mathf.Abs(velocity.y);
+        // tmpvec.z += Mathf.Abs(velocity.z);
+
+        if (droppin)
+        {
+            StartCoroutine(wair_fall());
+        }
+
+        if (falling)
+        {
+            velocity.y = -velocity.y;
+        }
 
         if (movable)
         {
-            maximumreached();
+            if (!falling)
+            {
+                maximumreached();
+            }
             this.transform.position += velocity;
             if (onPlat)
             {
                 Player.transform.position += velocity;
             }
         }
-	
-	}
+    }
 
-    void  maximumreached()
+    void maximumreached()
     {
         Debug.Log(beginning);
-        if (Mathf.Abs(tmpvec.x) - Mathf.Abs(beginning.x)>=Mathf.Abs(maximum.x))
+        if (Mathf.Abs(tmpvec.x) - Mathf.Abs(beginning.x) >= Mathf.Abs(maximum.x))
         {
             Debug.Log("MaxReached");
             velocity.x = -velocity.x;
@@ -68,7 +96,12 @@ public class PlattformMove : MonoBehaviour {
             velocity.z = -velocity.z;
             tmpvec.z = Mathf.Abs(beginning.z) - Mathf.Abs(maximum.z);
             return;
-        }        
+        }
+    }
+
+    void fallable()
+    {
+        StartCoroutine(wair_fall());
     }
 
     void OnTriggerEnter(Collider other)
@@ -80,7 +113,18 @@ public class PlattformMove : MonoBehaviour {
     }
 
     void OnTriggerExit(Collider other)
-    {      
-            onPlat = false;        
+    {
+        onPlat = false;
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject == Player.gameObject)
+        {
+            if (breakable)
+            {
+                StartCoroutine(wair_break());
+            }
+        }
     }
 }
