@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Brainfuck/Assets/Scenes/Intro.meta
 guid: 128cff94e2ec44e49b2fe12b94605edc
 folderAsset: yes
 timeCreated: 1447447175
 licenseType: Free
+=======
+guid: f38fbec02e11d8845afd35ea7cb68cd5
+folderAsset: yes
+timeCreated: 1447263691
+licenseType: Pro
+>>>>>>> 4ffed41ad2912132bd46a0f6aa009f5b4dc30cae:Brainfuck/Assets/Scenes/Intro.meta
 DefaultImporter:
   userData: 
   assetBundleName: 
