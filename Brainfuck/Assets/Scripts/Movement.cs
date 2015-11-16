@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Movement : MonoBehaviour {
+public class Movement : MonoBehaviour
+{
 
     public float speed = 6.0F;
 
@@ -40,7 +41,7 @@ public class Movement : MonoBehaviour {
         isGrounded = true;
         v3Cam = new Vector3(0f, 0f, 0f);
         v3Player = new Vector3(0f, 0f, 0f);
-        
+
     }
 
     void Update()
@@ -49,7 +50,7 @@ public class Movement : MonoBehaviour {
         {
             if (Input.GetAxis("Vertical") != 0)
             {
-                              
+
                 if (Input.GetAxis("Vertical") > 0 && forward_Speed < speed)
                 {
                     forward_Speed += acceleration * Time.deltaTime;
@@ -120,22 +121,23 @@ public class Movement : MonoBehaviour {
             if (forward_Speed != 0)
             {
                 MoveDirection += transform.forward * forward_Speed;
-            }         
+            }
         }
 
         rBody.velocity = MoveDirection;
 
 
-        if (Input.GetAxis("Mouse X") != 0){
-            transform.RotateAround(transform.up, (Input.GetAxis("Mouse X")/10*sensitivityX));
-        }
-        if(Input.GetAxis("Mouse Y") != 0)
+        if (Input.GetAxis("Mouse X") != 0)
         {
-            v3Cam.x -= (Input.GetAxis("Mouse Y") *  sensitivityY);
+            transform.RotateAround(transform.up, (Input.GetAxis("Mouse X") / 10 * sensitivityX));
+        }
+        if (Input.GetAxis("Mouse Y") != 0)
+        {
+            v3Cam.x -= (Input.GetAxis("Mouse Y") * sensitivityY);
             mainCamera.transform.localRotation = Quaternion.Euler(v3Cam);
         }
         Gravity();
-        
+
     }
 
     void Gravity()
@@ -144,7 +146,9 @@ public class Movement : MonoBehaviour {
         {
             Debug.Log("grounded");
             rBody.AddRelativeForce(new Vector3(0f, -gravityOnGround, 0f));
-        }else{
+        }
+        else
+        {
             Debug.Log("Air");
             rBody.velocity = new Vector3(0, 0, 0);
             rBody.AddRelativeForce(new Vector3(0f, -gravityInAir, 0f));
@@ -152,10 +156,10 @@ public class Movement : MonoBehaviour {
         isGrounded = false;
     }
 
-    
+
     void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Ground")
+        if (other.tag == "Ground")
         {
             isGrounded = true;
         }
