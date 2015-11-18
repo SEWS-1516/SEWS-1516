@@ -1,28 +1,17 @@
 fileFormatVersion: 2
 guid: 9bafbe81480c7aa4c85e9212a35cb63b
-timeCreated: 1446478603
-licenseType: Free
+timeCreated: 1447261389
+licenseType: Pro
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: Cube
-    100002: Cylinder
-    100004: //RootNode
-    100006: Torus
-    400000: Cube
-    400002: Cylinder
-    400004: //RootNode
-    400006: Torus
-    2300000: Cube
-    2300002: Cylinder
-    2300004: Torus
-    3300000: Cube
-    3300002: Cylinder
-    3300004: Torus
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: Torus
-    4300002: Cylinder
-    4300004: Cube
-    7400000: Default Take
+    7400000: starting
+    7400002: normal
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -43,7 +32,63 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: starting
+      takeName: Default Take
+      firstFrame: -1
+      lastFrame: 14
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: normal
+      takeName: Default Take
+      firstFrame: 14
+      lastFrame: 54
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
