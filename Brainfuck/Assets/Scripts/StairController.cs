@@ -36,7 +36,8 @@ public class StairController : MonoBehaviour
     private Vector3 beginning;
     private Vector3 counter;
     private const string statename = "speed";
-    private float i, switch_v = -1;
+    private float i, switch_v = 1;
+    
     private int index = 1;
 
 
@@ -67,10 +68,10 @@ public class StairController : MonoBehaviour
     {
 
         //if((Mathf.Abs(Max_Angle)+Mathf.Abs(beginning)) % (Mathf.Abs(beginning) + (Math.Abs(rotatelimit)*index)))
-        {
+        /*{
             rotationspeed = -rotationspeed;
             index = 1;
-        }
+        }*/
 
         Ray ray = camer.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -81,9 +82,8 @@ public class StairController : MonoBehaviour
             if (hit.collider.gameObject == this.gameObject && isswitch)
             {
                 Debug.Log("triggert");
-                triggert = true;
-                switch_v = 1;
-                //anima.SetFloat(statename, switch_v);
+                triggert = true;                
+                anima.SetFloat(statename, switch_v);
             }
             else { switch_v = 0; }
         }
@@ -91,11 +91,9 @@ public class StairController : MonoBehaviour
 
         if (triggert || isdrin)
         {
-
+            
             anima.SetFloat(statename, switch_v);
-            // counter += Mathf.Abs(rotationspeed);
-
-
+            counter += rotationspeed;
             stair.transform.Rotate(rotationspeed, Space.Self);
 
             if (counter == rotatelimit)
