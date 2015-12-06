@@ -23,7 +23,6 @@ public class Movement : MonoBehaviour
     private bool isGrounded;
 
     private RaycastHit hit;
-    //private float distanceToGround = 0;
 
     private float forward_Speed;
     private float side_Speed;
@@ -31,7 +30,6 @@ public class Movement : MonoBehaviour
     private Vector3 MoveDirection;
     private Vector3 v3Cam;
     private Vector3 v3Player;
-
     void Start()
     {
 
@@ -44,31 +42,30 @@ public class Movement : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (true)
+        if (isGrounded)
         {
             if (Input.GetAxis("Vertical") != 0)
             {
-
                 if (Input.GetAxis("Vertical") > 0 && forward_Speed < speed)
                 {
-                    forward_Speed += acceleration * Time.deltaTime;
-                    //rBody.velocity = transform.forward * speed;
+                    //forward_Speed += acceleration * Time.deltaTime;
+                    rBody.velocity = transform.forward * speed;
                 }
 
                 else if (Input.GetAxis("Vertical") < 0 && -forward_Speed < speed)
                 {
-                    forward_Speed -= acceleration * Time.deltaTime;
-                    //rBody.velocity = transform.forward * -speed;
+                    //forward_Speed -= acceleration * Time.deltaTime;
+                    rBody.velocity = transform.forward * -speed;
                 }
                 if (forward_Speed > speed)
                 {
-                    forward_Speed = speed;
+                    //forward_Speed = speed;
                 }
                 if (-forward_Speed > speed)
                 {
-                    forward_Speed = -speed;
+                    //forward_Speed = -speed;
                 }
 
             }
@@ -79,36 +76,36 @@ public class Movement : MonoBehaviour
 
             if (Input.GetAxis("Horizontal") != 0)
             {
-                if (Input.GetAxis("Horizontal") > 0 && side_Speed < speed)
+                if (Input.GetAxis("Horizontal") > 0)
                 {
-                    side_Speed += acceleration * Time.deltaTime;
-                    //rBody.velocity = transform.forward * speed;
+                    //side_Speed += acceleration * Time.deltaTime;
+                    rBody.velocity = transform.right * speed;
                 }
 
-                else if (Input.GetAxis("Horizontal") < 0 && -side_Speed < speed)
+                else if (Input.GetAxis("Horizontal") < 0)
                 {
-                    side_Speed -= acceleration * Time.deltaTime;
-                    //rBody.velocity = transform.forward * -speed;
+                    //side_Speed -= acceleration * Time.deltaTime;
+                    rBody.velocity = transform.right * -speed;
                 }
                 if (side_Speed > speed)
                 {
-                    side_Speed = speed;
+                    //side_Speed = speed;
                 }
                 if (-side_Speed > speed)
                 {
-                    side_Speed = -speed;
+                    //side_Speed = -speed;
                 }
                 //rBody.velocity = transform.right * sideSpeed;
             }
             else
             {
-                side_Speed = 0;
+                //side_Speed = 0;
             }
         }
         else
         {
-            forward_Speed = 0;
-            side_Speed = 0;
+            //forward_Speed = 0;
+            //side_Speed = 0;
         }
 
         MoveDirection = new Vector3(0, 0, 0);
@@ -116,15 +113,15 @@ public class Movement : MonoBehaviour
         {
             if (side_Speed != 0)
             {
-                MoveDirection = transform.right * side_Speed;
+                //MoveDirection = transform.right * side_Speed;
             }
             if (forward_Speed != 0)
             {
-                MoveDirection += transform.forward * forward_Speed;
+                //MoveDirection += transform.forward * forward_Speed;
             }
         }
 
-        rBody.velocity = MoveDirection;
+        //rBody.velocity = MoveDirection;
 
 
         if (Input.GetAxis("Mouse X") != 0)

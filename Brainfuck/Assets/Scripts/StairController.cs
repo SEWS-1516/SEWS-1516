@@ -8,7 +8,7 @@ public class StairController : MonoBehaviour
 
 
     [Header("RotationsAttribute")]
-    public Vector3 rotationspeed = new Vector3(0, 0, 1); //Rotationsgeschwindigkeit
+    public Vector3 rotationspeed = new Vector3(0,0,1); //Rotationsgeschwindigkeit
     public Vector3 maxAngle = new Vector3(0, 0, 180); //noch nicht im einsatz   
     public Vector3 rotatelimit = new Vector3(0, 0, 180); // rotiert hier 180Grad.
 
@@ -34,10 +34,11 @@ public class StairController : MonoBehaviour
     private Animator anima; //Animator benötigen der Switch und Button bzw noch andere
 
     private Vector3 beginning;
-    private Vector3 counter;
+    private Vector3 counter = new Vector3(0, 0, 0);
     private const string statename = "speed";
-    private float i, switch_v = -1;
+    private float i, switch_v = 1;
     private int index = 1;
+    private bool activ = false;
 
 
     // Use this for initialization
@@ -67,47 +68,64 @@ public class StairController : MonoBehaviour
     {
 
         //if((Mathf.Abs(Max_Angle)+Mathf.Abs(beginning)) % (Mathf.Abs(beginning) + (Math.Abs(rotatelimit)*index)))
-        {
+        /*{
             rotationspeed = -rotationspeed;
             index = 1;
-        }
+        }*/
 
         Ray ray = camer.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 20) && Input.GetKeyDown(KeyCode.E)) //Raycast wird überprüfft ob es in der distance von 20 und dem drück von E unten einen collider erwischt
+        if (Physics.Raycast(ray, out hit, 200000) && Input.GetKeyDown(KeyCode.E)) //Raycast wird überprüfft ob es in der distance von 20 und dem drück von E unten einen collider erwischt
         {
             Debug.Log("E wurde gedrückt!!!");
             if (hit.collider.gameObject == this.gameObject && isswitch)
             {
-                Debug.Log("triggert");
+                if (activ)
+                {
+                    activ = false;
+                }
+                else
+                {
+                    activ = true;
+                }
+                Debug.Log("triggert");                
                 triggert = true;
                 switch_v = 1;
-                //anima.SetFloat(statename, switch_v);
-            }
-            else { switch_v = 0; }
+                anima.SetBool("activ", activ);
+            }            
         }
-        Debug.Log(switch_v);
-
+        Debug.Log(activ);
+        
         if (triggert || isdrin)
         {
+            if (activ)
+            {
+                activ = false;
+            }
+            else
+            {
+                activ = true; 
+            }
 
-            anima.SetFloat(statename, switch_v);
-            // counter += Mathf.Abs(rotationspeed);
-
-
+            anima.SetBool("activ", activ);
+            counter.z += rotationspeed.z;
             stair.transform.Rotate(rotationspeed, Space.Self);
 
-            if (counter == rotatelimit)
+            if (counter.z == rotatelimit.z)
             {
                 index++;
                 triggert = false;
                 isdrin = false;
                 counter = new Vector3(0, 0, 0);
-                switch_v *= -1;
+                
             }
         }
+
+      
     }
+
+  
 
     void OnTriggerEnter(Collider other)
     {
@@ -128,7 +146,7 @@ public class StairController : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        switch_v *= -1;
+        activ = false;
     }
 
     void notWorkingSwitch()
