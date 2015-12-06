@@ -52,11 +52,16 @@ public class Movement : MonoBehaviour
                 {
                     //forward_Speed += acceleration * Time.deltaTime;
                     rBody.velocity = transform.forward * speed;
+<<<<<<< HEAD
+=======
+                    //rBody.velocity = transform.forward * speed * Time.deltaTime;
+>>>>>>> fb44b8554935f4d7429d08f69664dfdcce0bfc42
                 }
 
                 else if (Input.GetAxis("Vertical") < 0 && -forward_Speed < speed)
                 {
                     //forward_Speed -= acceleration * Time.deltaTime;
+<<<<<<< HEAD
                     rBody.velocity = transform.forward * -speed;
                 }
                 if (forward_Speed > speed)
@@ -66,7 +71,12 @@ public class Movement : MonoBehaviour
                 if (-forward_Speed > speed)
                 {
                     //forward_Speed = -speed;
+=======
+                    rBody.velocity = transform.forward * speed;
+                    //rBody.velocity = transform.forward * -speed * Time.deltaTime;
+>>>>>>> fb44b8554935f4d7429d08f69664dfdcce0bfc42
                 }
+
 
             }
             else
@@ -83,6 +93,7 @@ public class Movement : MonoBehaviour
                 }
 
                 else if (Input.GetAxis("Horizontal") < 0)
+<<<<<<< HEAD
                 {
                     //side_Speed -= acceleration * Time.deltaTime;
                     rBody.velocity = transform.right * -speed;
@@ -96,6 +107,13 @@ public class Movement : MonoBehaviour
                     //side_Speed = -speed;
                 }
                 //rBody.velocity = transform.right * sideSpeed;
+=======
+                {
+                    //side_Speed -= acceleration * Time.deltaTime;
+                    rBody.velocity = transform.right * -speed;
+                }
+
+>>>>>>> fb44b8554935f4d7429d08f69664dfdcce0bfc42
             }
             else
             {

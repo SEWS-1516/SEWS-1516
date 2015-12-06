@@ -37,6 +37,10 @@ public class StairController : MonoBehaviour
     private Vector3 counter = new Vector3(0, 0, 0);
     private const string statename = "speed";
     private float i, switch_v = 1;
+<<<<<<< HEAD
+=======
+    
+>>>>>>> fb44b8554935f4d7429d08f69664dfdcce0bfc42
     private int index = 1;
     private bool activ = false;
 
@@ -81,6 +85,7 @@ public class StairController : MonoBehaviour
             Debug.Log("E wurde gedrückt!!!");
             if (hit.collider.gameObject == this.gameObject && isswitch)
             {
+<<<<<<< HEAD
                 if (activ)
                 {
                     activ = false;
@@ -94,11 +99,19 @@ public class StairController : MonoBehaviour
                 switch_v = 1;
                 anima.SetBool("activ", activ);
             }            
+=======
+                Debug.Log("triggert");
+                triggert = true;                
+                anima.SetFloat(statename, switch_v);
+            }
+            else { switch_v = 0; }
+>>>>>>> fb44b8554935f4d7429d08f69664dfdcce0bfc42
         }
         Debug.Log(activ);
         
         if (triggert || isdrin)
         {
+<<<<<<< HEAD
             if (activ)
             {
                 activ = false;
@@ -110,6 +123,11 @@ public class StairController : MonoBehaviour
 
             anima.SetBool("activ", activ);
             counter.z += rotationspeed.z;
+=======
+            
+            anima.SetFloat(statename, switch_v);
+            counter += rotationspeed;
+>>>>>>> fb44b8554935f4d7429d08f69664dfdcce0bfc42
             stair.transform.Rotate(rotationspeed, Space.Self);
 
             if (counter.z == rotatelimit.z)
